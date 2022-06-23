@@ -1,7 +1,6 @@
 import React from 'react';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { HightLightCard } from '../../../components/HightLightCard';
-import { TransactionCard } from '../../../components/TransactionCard';
+import { HightLightCard } from '../../components/HightLightCard';
+import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
 
 import {
     Cantainer,
@@ -17,38 +16,55 @@ import {
     Transactions,
     Title,
     TransactionList
-} from './styles'
+} from './styles';
+
+export interface DataListProps extends TransactionCardProps {
+    id: string
+}
 
 export function Dashboard() {
-    const data = [{
-        title: "Desenvolvimento de site",
-        amount: "R$ 12.000,00",
-        category: {
-            name: 'Vendas',
-            icon: 'dollar-sign'
+    //const teste : DataListProps;
+    //teste.date
+
+    const data: DataListProps[] = [
+        {
+            id: '1',
+            type: 'positive',
+            title: "Desenvolvimento de site",
+            amount: "R$ 12.000,00",
+            category: {
+                name: 'Vendas',
+                icon: 'dollar-sign'
+            },
+            date: "14/06/2022"
         },
-        date: "13/06/2022"
-    },
-    {
-        title: "Desenvolvimento de site",
-        amount: "R$ 12.000,00",
-        category: {
-            name: 'Vendas',
-            icon: 'dollar-sign'
+        {
+            id: '2',
+            type: 'negative',
+            title: "Hamburger pizza",
+            amount: "R$ 59,00",
+            category: {
+                name: 'Alimentos',
+                icon: 'coffee'
+            },
+            date: "10/06/2022"
         },
-        date: "13/06/2022"
-    },
-    {
-        title: "Desenvolvimento de site",
-        amount: "R$ 12.000,00",
-        category: {
-            name: 'Vendas',
-            icon: 'dollar-sign'
+        {
+            id: '3',
+            type: 'negative',
+            title: "Aluguel do apartamento",
+            amount: "R$ 1.200,00",
+            category: {
+                name: 'Casa',
+                icon: 'shopping-bag'
+            },
+            date: "10/06/2022"
         },
-        date: "13/06/2022"
-    },
     ];
-  // showsVerticalScrollIndicator={false} retira a barra lateral vertical
+    // showsVerticalScrollIndicator={false} retira a barra lateral vertical
+    //Você pode converter o item.id para string usando o toString() dessa forma:
+    //keyExtractor={item => item.id.toString()}
+
     return (
         <Cantainer>
             <Header>
@@ -85,14 +101,12 @@ export function Dashboard() {
 
             <Transactions>
                 <Title>Listagem</Title>
-               
+
                 <TransactionList
                     data={data}
+                    keyExtractor={item => item.id}
                     renderItem={({ item }) => <TransactionCard data={item} />}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{
-                        paddingBottom: getBottomSpace()
-                    }}
+
                 />
 
             </Transactions>
