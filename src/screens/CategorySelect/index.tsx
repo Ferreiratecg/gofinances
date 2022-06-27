@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList } from "react-native";
+import { Button } from "../../components/Form/Button";
 import { categories } from "../../utils/categories";
 
 import {
@@ -9,7 +10,8 @@ import {
     Category,
     Icon,
     Name,
-    Separador
+    Separador,
+    Footer,
 } from "./styles";
 
 interface Category {
@@ -18,7 +20,7 @@ interface Category {
 }
 
 interface Props {
-    category: string;
+    category: Category;
     setCategory: (category: Category) => void;
     closeSelectCategory: () => void;
 }
@@ -28,24 +30,38 @@ export function CategorySelect({
     setCategory,
     closeSelectCategory
 }: Props) {
+
+    function handleCategorySelect(category: Category){
+       setCategory(category);
+    }
+
     return (
         <Container>
             <Header>
                 <Title>Categorias</Title>
             </Header>
 
-            <FlatList 
-            data={categories}
-            style={{ flex: 1, width: '100%' }}
-            keyExTractor={(item) => item.key}
-            renderItem={({ item }) => (
-                <Category>
-                    <Icon name={item.icon} />
-                    <Name>{item.name}</Name>
-                </Category>
-            )}
-            ItemSeparatorComponent={() => <Separador />}
+            <FlatList
+                data={categories}
+                style={{ flex: 1, width: '100%' }}
+                keyExTractor={(item) => item.key}
+                renderItem={({ item }) => (
+                    <Category
+                     onPress={() => handleCategorySelect(item)}
+                     isActive={category.key === item.key}        
+                    >
+                        <Icon name={item.icon} />
+                        <Name>{item.name}</Name>
+                    </Category>
+                )}
+                ItemSeparatorComponent={() => <Separador />}
             />
+            <Footer>
+                <Button
+                 title="Selecionar"
+                 onPress={closeSelectCategory}
+                 />
+            </Footer>
         </Container>
     )
 }
