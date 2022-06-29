@@ -139,7 +139,6 @@ export function Register() {
                         title="Enviar"
                         onPress={handleSubmit(handleRegister)}
                     />
-
                 </Form>
 
                 <Modal visible={categoryModalOpen}>
